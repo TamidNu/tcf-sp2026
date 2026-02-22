@@ -1,68 +1,73 @@
-# Homework 2: Claim Your Corner of the Internet
+# React + TypeScript + Vite
 
-**Objective**: Start build your own personal website using the modern frontend stack: Next.js, TypeScript, and Tailwind CSS.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-**Inspiration**: Feel free to check out this great website that displays several amazing developer portfolios! https://webofdevs.com/ . Use this website for inspiration.
+Currently, two official plugins are available:
 
-**Future work**: This homework is meant to get the ball rolling. Once you get started, you can look into vercel as a way of deploying your website (for free) and look into some tutorials to learn more about NextJS and it's capabilities.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## The Stack
+## React Compiler
 
-Before you start, here is what you will be using:
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-1.  **Next.js**: A React-based framework that handles the heavy lifting of web development (routing, optimization, server-side rendering). It wraps React to make building full applications easier and faster.
-2.  **TypeScript**: A superset of JavaScript that adds static types. It's like JavaScript with safety rails—it helps you catch errors before you run your code.
-3.  **Tailwind CSS**: A utility-first CSS framework. Instead of writing separate `.css` files with custom class names, you use pre-defined utility classes (like `flex`, `pt-4`, `text-center`) directly in your HTML/JSX.
+## Expanding the ESLint configuration
 
-## Instructions
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-### 1. Project Setup
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-Open your terminal and navigate to this `02-frontend/hw` directory. Run the following command exactly as written:
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-```bash
-npx create-next-app@latest mywebsite --typescript --tailwind
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-these were my answers to the questions asked after you run this command (for some more clarity):
-<img width="1452" height="242" alt="image" src="https://github.com/user-attachments/assets/8b7347f1-fd91-4b02-9190-92f6e11bf118" />
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-This will create a new folder named `mywebsite` containing your Next.js project.
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-### 2. The Build
-
-1.  Navigate into your new project: `cd mywebsite`
-2.  Start the development server: `npm run dev`
-3.  Open `http://localhost:3000` in your browser.
-4.  Open the project in your code editor.
-5.  Edit `app/page.tsx` (or `src/app/page.tsx` if you selected the src directory option).
-    - Delete the boilerplate code provided by Next.js.
-    - Create a root page that introduces **you**.
-    - Include:
-      - Your Name (styled prominently).
-      - A short bio or introduction.
-      - Links to your GitHub, LinkedIn, or other socials.
-      - (Optional) A profile picture.
-    - **Style everything using Tailwind CSS classes**. Do not write a separate CSS file unless you strongly preffer it. In our experience tailwind is a lot simpler.
-
-### 3. The Writeup
-
-In the `writeup.md` document in this folder, do the following. Write approximately 200 words covering:
-
-- What you learned this week about frontend development.
-- How using a framework like Next.js compares to writing raw HTML/CSS.
-- Your understanding of how these tools (TS, Tailwind, Next.js) fit together.
-
-## AI Disclosure & Academic Integrity
-
-**You are allowed and encouraged to use AI tools** (ChatGPT, Claude, Cursor, Copilot) to help you with this assignment.
-
-**HOWEVER**: You must be able to explain **exactly** what is happening in your code. If asked "What does `flex-col` do?" or "Why is this typed as `string`?", you must have the answer. Use AI to accelerate your learning, not to bypass it.
-
-## Resources
-
-Brief videos to get you up to speed:
-
-- [Next.js in 100 Seconds](https://www.youtube.com/watch?v=Sklc_fQB85g)
-- [Tailwind CSS in 100 Seconds](https://www.youtube.com/watch?v=mr15Xzb1Ook)
-- [TypeScript in 100 Seconds](https://www.youtube.com/watch?v=zQnBQ4tB3ZA)
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
