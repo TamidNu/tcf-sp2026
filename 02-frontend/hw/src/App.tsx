@@ -1,10 +1,19 @@
-import Header from "./components/Header"
+import Header from "./components/Header";
 
 export default function App() {
   return (
-    <main style={{ padding: "2rem", fontFamily: "sans-serif" }}>
+    <>
       <Header name="Pablo Costa Sada" />
-      <p>You're building like a real engineer now.</p>
-    </main>
-  )
+
+      <div className="compass">
+        <div className="line north"></div>
+        <div className="line east"></div>
+        <div className="line south"></div>
+        <div className="line west"></div>
+        <div className="center-image">
+        <img src="/center-compass.png" alt="Center" />
+        </div>
+      </div>
+    </>
+  );
 }

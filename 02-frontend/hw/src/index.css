@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600;700&display=swap');
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -5,7 +6,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #011842;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -14,18 +15,16 @@
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
+  font-weight: 400;
+  color: #AE8625;
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: #AE8625;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -42,12 +41,12 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #002366;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #002366;
 }
 button:focus,
 button:focus-visible {
@@ -56,13 +55,142 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: #002366;
+    background-color: #AE8625;
   }
   a:hover {
-    color: #747bff;
+    color: #002366;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #AE8625;
+  }
+}
+
+.compass {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 50vw;
+  height: 100vh;
+  transform: translate(-50%, -50%);
+  pointer-events: "none";
+  z-index: 1;
+}
+
+/* Base line style */
+.line {
+  position: absolute;
+  background: #9ed9f4;
+  z-index: 2; 
+}
+
+.center-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5; /* image is above */
+}
+
+.center-image img {
+  width: 120px;   /* start here */
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* Vertical lines */
+.north,
+.south {
+  width: 2px;
+  height: 70vh;
+  left: 50%;
+  top: 50%;
+  transform-origin: center;
+  transform: translate(-50%, -50%) scaleY(0);
+  animation: growY 1.2s ease-out forwards;
+  animation-delay: 0.3s;
+  animation-iteration-count: 3;
+  animation-direction: alternate;
+}
+
+/* Horizontal lines */
+.east,
+.west {
+  height: 2px;
+  width: 70vw;
+  left: 50%;
+  top: 50%;
+  transform-origin: center;
+  transform: translate(-50%, -50%) scaleX(0);
+  animation: growX 1.2s ease-out forwards;
+  animation-delay: 0.3s;
+  animation-iteration-count: 3;
+  animation-direction: alternate;
+}
+
+/* Position directions */
+.north {
+  transform: translate(-50%, -100%) scaleY(0);
+}
+.south {
+  transform: translate(-50%, 0%) scaleY(0);
+}
+.east {
+  transform: translate(0%, -50%) scaleX(0);
+}
+.west {
+  transform: translate(-100%, -50%) scaleX(0);
+}
+
+.north::after,
+.south::after,
+.east::after,
+.west::after {
+  content: "➣";
+  position: absolute;
+  font-size: 20px;
+  color: #9ed9f4;
+  line-height: 1;
+}
+
+/* NORTH */
+.north::after {
+  top: 0;
+  left: 50%;
+  transform: translate(-54.5%, -70%) rotate(-90deg);
+}
+
+/* SOUTH */
+.south::after {
+  bottom: 0;
+  left: 50%;
+  transform: translate(-45.5%, 70%) rotate(90deg);
+}
+
+/* EAST */
+.east::after {
+  right: 0;
+  top: 50%;
+  transform: translate(70%, -54.5%);
+}
+
+/* WEST */
+.west::after {
+  left: 0;
+  top: 50%;
+  transform: translate(-70%, -45.5%) rotate(180deg);
+}
+
+/* Animations */
+@keyframes growY {
+  to {
+    transform: translate(-50%, -50%) scaleY(1);
+  }
+}
+
+@keyframes growX {
+  to {
+    transform: translate(-50%, -50%) scaleX(1);
   }
 }
